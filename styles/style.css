@@ -587,7 +587,7 @@ header {
 
 /* Responsive Typography and Spacing */
 html {
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 @media screen and (max-width: 1200px) {
@@ -602,11 +602,7 @@ html {
     }
 }
 
-@media screen and (max-width: 480px) {
-    html {
-        font-size: 12px;
-    }
-}
+
 
 /* Ensure proper scaling of images */
 img {
