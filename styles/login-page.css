@@ -465,7 +465,7 @@ body::after {
 @media (max-width: 360px) {
     .login-container {
         width: 100%;
-        padding: 0 5px;
+        padding: 0 0px;
     }
 
     .login-image {
