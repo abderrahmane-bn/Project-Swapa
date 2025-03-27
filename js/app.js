@@ -126,8 +126,8 @@ gsap.timeline({
 gsap.timeline({
   scrollTrigger: {
     trigger: ".features",
-    start: "center bottom",
-    end: "center top",
+    start: "top 80%",
+    end: "top 50%",
     toggleActions: "play none none none" 
   }
 })
@@ -154,8 +154,8 @@ gsap.timeline({
 gsap.timeline({
   scrollTrigger:{
     trigger :".showcase",
-    start: "center bottom",
-    end: "center top",
+    start: "top 80%",
+    end: "top 50%",
     toggleActions:"play none none none"
   }
 })
@@ -181,8 +181,8 @@ gsap.timeline({
 gsap.timeline({
   scrollTrigger:{
     trigger :".contact",
-    start: "center 95%",
-    end: "center top",
+    start: "top 80%",
+    end: "top 50%",
     toggleActions:"play none none none"
   }
 })
