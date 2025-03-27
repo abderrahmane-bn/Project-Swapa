@@ -11,7 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 body::before, body::after {
@@ -427,8 +427,7 @@ body::after {
     }
 
     .login-container {
-        max-width: 100%;
-        padding-bottom: 3rem;
+        max-width: 100%
     }
 
     .login-image {
