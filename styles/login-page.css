@@ -411,9 +411,7 @@ body::after {
     .login-welcome p {
         font-size: 1.2rem;
     }
-    .toggle-form {
-        padding-bottom: 10px;
-    }
+    
 }
 
 @media (max-width: 480px) {
@@ -462,21 +460,53 @@ body::after {
     .social-btn img {
         width: 20px;
     }
-    .toggle-form {
-        padding-bottom: 10px;
-    }
+    
 }
-
-@media (max-width : 360px) {
+@media (max-width: 360px) {
     .login-container {
         max-width: 100%;
+        min-height: 100vh;
     }
 
     .login-image {
         min-height: 100px;
+        max-height: 200px;
     }
 
     .form-container {
-        padding: 300px 0px 0px;
+        margin-top: 30px;
+        padding: 50px 0px 0px;
+    }
+
+    .login-welcome h2 {
+        font-size: 1.5rem;
+    }
+
+    .login-welcome p {
+        font-size: 1rem;
+    }
+
+    .input-group input {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .action-btn {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    .social-btn {
+        width: 35px;
+        height: 35px;
+    }
+
+    .social-btn img {
+        width: 18px;
+    }
+
+    .toggle-form {
+        font-size: 0.9rem;
     }
 }
+
