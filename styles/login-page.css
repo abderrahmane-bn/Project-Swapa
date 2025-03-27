@@ -48,7 +48,6 @@ body::after {
     width: 100%;
     max-width: 1500px;
     display: flex;
-    overflow-x: hidden;
     height: 95vh;
 }
 
