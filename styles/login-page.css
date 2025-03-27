@@ -464,18 +464,17 @@ body::after {
 }
 @media (max-width: 360px) {
     .login-container {
-        max-width: 100%;
-        min-height: 100vh;
+        width: 100%;
+        padding: 0 5px;
     }
 
     .login-image {
-        min-height: 100px;
-        max-height: 200px;
+        min-height: 180px;
+        max-height: 25vh;
     }
 
     .form-container {
-        margin-top: 30px;
-        padding: 50px 0px 0px;
+        padding: 10px;
     }
 
     .login-welcome h2 {
@@ -483,17 +482,17 @@ body::after {
     }
 
     .login-welcome p {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .input-group input {
-        width: 100%;
-        margin-left: 0;
+        padding: 10px;
+        font-size: 0.8rem;
     }
 
     .action-btn {
-        font-size: 0.9rem;
         padding: 10px;
+        font-size: 0.8rem;
     }
 
     .social-btn {
@@ -506,7 +505,7 @@ body::after {
     }
 
     .toggle-form {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 }
 
