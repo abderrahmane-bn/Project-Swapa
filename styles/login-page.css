@@ -411,7 +411,9 @@ body::after {
     .login-welcome p {
         font-size: 1.2rem;
     }
-    
+    .toggle-form {
+        padding-bottom: 10px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -460,39 +462,268 @@ body::after {
     .social-btn img {
         width: 20px;
     }
-    
+    .toggle-form {
+        padding-bottom: 10px;
+    }
 }
-@media (max-width: 360px) {
+@media (min-width: 360px) and (max-width: 412px) {
+    body {
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
     .login-container {
         width: 100%;
-        padding: 0 0px;
+        max-width: 100%;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .switch-container {
+        top: 10px;
+        right: 10px;
+        scale: 0.95;
     }
 
     .login-image {
-        min-height: 180px;
-        max-height: 25vh;
+        min-height: 250px;
+        max-height: 35vh;
+        border-radius: 0 0 45% 45% / 0 0 15% 15%;
+    }
+
+    .login-image img {
+        max-width: 70%;
+        transform: scale(1.1);
     }
 
     .form-container {
-        padding: 10px;
+        padding: 10px 15px;
+        margin-top: 15px;
+    }
+
+    .login-welcome {
+        margin-bottom: 20px;
+        text-align: center;
     }
 
     .login-welcome h2 {
-        font-size: 1.5rem;
+        font-size: 2rem;
+        margin-bottom: 5px;
+        color: var(--text-primary);
+    }
+
+    .login-welcome p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 12px;
+        font-size: 0.9rem;
+        margin-left: 0;
+    }
+
+    .forgot-password {
+        margin-bottom: 15px;
+        text-align: right;
+    }
+
+    .forgot-password a {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    .action-btn {
+        padding: 12px;
+        font-size: 1rem;
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    .divider {
+        margin: 15px 0;
+        font-size: 0.9rem;
+    }
+
+    .social-login {
+        gap: 15px;
+        margin-bottom: 20px;
+        justify-content: center;
+    }
+
+    .social-btn {
+        width: 45px;
+        height: 45px;
+    }
+
+    .social-btn img {
+        width: 22px;
+    }
+
+    .toggle-form {
+        font-size: 0.9rem;
+        text-align: center;
+    }
+
+    .checkbox-group {
+        margin-bottom: 15px;
+    }
+
+    .checkbox-group label {
+        font-size: 0.8rem;
+    }
+
+    /* Landscape orientation handling */
+    @media (max-height: 660px) and (orientation: landscape) {
+        .login-container {
+            flex-direction: row;
+            max-height: 100vh;
+        }
+
+        .login-image {
+            flex: 0 0 40%;
+            min-height: 100%;
+            max-height: none;
+        }
+
+        .form-container {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 100vh;
+            padding: 10px 0px;
+            margin-top: 0;
+        }
+
+        .login-welcome h2 {
+            font-size: 1.5rem;
+        }
+
+        .login-welcome p {
+            font-size: 0.9rem;
+        }
+
+        .input-group input {
+            padding: 10px;
+            font-size: 0.8rem;
+        }
+    }
+
+    /* Additional adjustments for very short screens */
+    @media (max-height: 600px) {
+        .login-image {
+            min-height: 200px;
+            max-height: 30vh;
+        }
+
+        .login-welcome h2 {
+            font-size: 1.7rem;
+        }
+
+        .login-welcome p {
+            font-size: 1rem;
+        }
+    }
+}
+
+/* Prevent any potential horizontal scrolling */
+@media (min-width: 360px) and (max-width: 412px) {
+    html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+        position: relative;
+    }
+}
+
+
+@media (max-width: 375px) {
+    body {
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    .login-container {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 100vh;
+        padding: 0 0px;
+    }
+
+    .switch-container {
+        top: 5px;
+        right: 5px;
+        scale: 0.9;
+    }
+
+    .login-image {
+        min-height: 150px;
+        max-height: 25vh;
+        border-radius: 0 0 40% 40% / 0 0 10% 10%;
+    }
+
+    .login-image img {
+        max-width: 60%;
+        transform: scale(.8);
+    }
+
+    .form-container {
+        padding: 5px 0px;
+        margin-top: 10px;
+    }
+
+    .login-welcome {
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .login-welcome h2 {
+        font-size: 1.3rem;
+        margin-bottom: 3px;
     }
 
     .login-welcome p {
         font-size: 0.9rem;
     }
 
+    .input-group {
+        margin-bottom: 10px;
+    }
+
     .input-group input {
-        padding: 10px;
+        width: 100%;
+        padding: 8px;
         font-size: 0.8rem;
+        margin-left: 0;
+    }
+
+    .forgot-password {
+        margin-bottom: 10px;
+        text-align: right;
+    }
+
+    .forgot-password a {
+        font-size: 0.7rem;
     }
 
     .action-btn {
-        padding: 10px;
+        padding: 8px;
         font-size: 0.8rem;
+        margin-bottom: 10px;
+    }
+
+    .divider {
+        margin: 10px 0;
+        font-size: 0.7rem;
+    }
+
+    .social-login {
+        gap: 10px;
+        margin-bottom: 15px;
     }
 
     .social-btn {
@@ -505,7 +736,48 @@ body::after {
     }
 
     .toggle-form {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
+    }
+
+    .checkbox-group {
+        margin-bottom: 10px;
+    }
+
+    .checkbox-group label {
+        font-size: 0.7rem;
+    }
+
+    /* Additional tweaks for extremely small screens */
+    @media (max-height: 550px) {
+        .login-image {
+            min-height: 100px;
+            max-height: 20vh;
+        }
+
+        .form-container {
+            padding: 3px;
+        }
+
+        .login-welcome h2 {
+            font-size: 1.1rem;
+        }
+
+        .login-welcome p {
+            font-size: 0.8rem;
+        }
+
+        .input-group input {
+            padding: 6px;
+            font-size: 0.7rem;
+        }
     }
 }
 
+/* Ensure absolute positioning doesn't cause horizontal scroll */
+@media (max-width: 375px) {
+    body, html {
+        max-width: 100%;
+        overflow-x: hidden;
+        position: relative;
+    }
+}
