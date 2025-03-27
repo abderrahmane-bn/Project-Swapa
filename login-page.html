@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/login-page.css">
+    <link rel="stylesheet" href="styles/var2.css">
+<body>
+    <div class="switch-container">
+        <label class="switch">
+            <input checked="true" id="checkbox" type="checkbox" />
+            <span class="slider">
+              <div class="star star_1"></div>
+              <div class="star star_2"></div>
+              <div class="star star_3"></div>
+              <svg viewBox="0 0 16 16" class="cloud_1 cloud">
+                <path
+                  transform="matrix(.77976 0 0 .78395-299.99-418.63)"
+                  fill="#fff"
+                  d="m391.84 540.91c-.421-.329-.949-.524-1.523-.524-1.351 0-2.451 1.084-2.485 2.435-1.395.526-2.388 1.88-2.388 3.466 0 1.874 1.385 3.423 3.182 3.667v.034h12.73v-.006c1.775-.104 3.182-1.584 3.182-3.395 0-1.747-1.309-3.186-2.994-3.379.007-.106.011-.214.011-.322 0-2.707-2.271-4.901-5.072-4.901-2.073 0-3.856 1.202-4.643 2.925"
+                ></path>
+              </svg>
+            </span>
+          </label>
+    </div>
+      
+    
+    <div class="login-container">
+        <div class="login-image">
+            <img class="robot" src="assets/Cartoon_Style_Robot-removebg-preview.png" alt="SWAPA">
+        </div>
+        <div class="form-container">
+            <div class="form-wrapper">
+                <!-- Login Form -->
+                <div class="login-form active" id="login-form">
+                    <div class="login-welcome form-element">
+                        <h2>Hello !</h2>
+                        <p>Welcome Back</p>
+                    </div>
+                    
+                    <div class="input-group form-element">
+                        <input type="email" placeholder="Enter Email">
+                    </div>
+                    
+                    <div class="input-group form-element">
+                        <input type="password" placeholder="••••••••">
+                    </div>
+                    
+                    <div class="forgot-password form-element">
+                        <a href="#">Recover Password ?</a>
+                    </div>
+                    
+                    <button class="action-btn form-element">Sign In</button>
+                    
+                    <div class="divider form-element">
+                        <span>Or continue with</span>
+                    </div>
+                    
+                    <div class="social-login form-element">
+                        <div class="social-btn"><a href="#"><img src="icons/google.svg" alt=""></a></div>
+                        <div class="social-btn"><a href="#"><img src="icons/Apple_light.svg" alt=""></a></div>
+                        <div class="social-btn"><a href="#"><img src="icons/facebook.svg" alt=""></a></div>
+                    </div>
+                    
+                    <div class="toggle-form form-element">
+                        Don't have an account ? <a href="#" class="signup-link">Create Account!</a>
+                    </div>
+                </div>
+                
+                <!-- Signup Form -->
+                <div class="signup-form inactive" id="signup-form">
+                    <div class="login-welcome form-element">
+                        <h2>Join Us!</h2>
+                        <p>Create your account</p>
+                    </div>
+                    
+                    <div class="input-group form-element">
+                        <input type="text" placeholder="Full Name">
+                    </div>
+                    
+                    <div class="input-group form-element">
+                        <input type="email" placeholder="Email Address">
+                    </div>
+                    
+                    <div class="input-group form-element">
+                        <input type="password" placeholder="Password">
+                    </div>
+                    
+                    
+                    
+                    <div class="checkbox-group form-element">
+                        <input type="checkbox" id="terms">
+                        <label for="terms">I agree to the Terms of Service and Privacy Policy</label>
+                    </div>
+                    
+                    <button class="action-btn form-element">Create Account</button>
+                    
+                    <div class="divider form-element">
+                        <span>Or sign up with</span>
+                    </div>
+                    
+                    <div class="social-login form-element">
+                        <div class="social-btn"><a href="#"><img src="icons/google.svg" alt=""></a></div>
+                        <div class="social-btn"><a href="#"><img src="icons/Apple_light.svg" alt=""></a></div>
+                        <div class="social-btn"><a href="#"><img src="icons/facebook.svg" alt=""></a></div>
+                    </div>
+                    
+                    <div class="toggle-form form-element">
+                        Already have an account? <a href="#" class="login-link">Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/gsap.min.js" integrity="sha512-f6bQMg6nkSRw/xfHw5BCbISe/dJjXrVGfz9BSDwhZtiErHwk7ifbmBEtF9vFW8UNIQPhV2uEFVyI/UHob9r7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/ScrollTrigger.min.js" integrity="sha512-AcqPGqrrAEtEwe+ADO5R8RbdFi7tuU7b/A2cJJH0Im0D18NRk5p5s4B3E5PMuO81KFw0ClN7J5SHVUJz7KOb0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>
