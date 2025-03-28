@@ -430,7 +430,7 @@ body::after {
     }
 
     .login-image {
-        min-height: 100px;
+        display: none;
     }
 
     .form-container {
