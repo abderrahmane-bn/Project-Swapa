@@ -171,3 +171,71 @@ masterTl
 window.addEventListener("load", () => {
     masterTl.play();
 });
+
+
+
+
+// reset password 
+
+  // GSAP Modal Animation
+const resetBtn = document.getElementById('resetBtn'); 
+const resetModal = document.getElementById('resetModal');
+const closeBtn = resetModal.querySelector('.close-btn');
+const modalContent = resetModal.querySelector('.modal-content');
+
+// Hide modal initially
+gsap.set(resetModal, { display: 'none', opacity: 0 });
+gsap.set(modalContent, { scale: 0.7, opacity: 0 });
+
+// Open Modal Function
+function openModal() {
+  gsap.to(resetModal, {
+    display: 'flex',
+    opacity: 1,
+    duration: 0.3,
+    ease: 'power2.out'
+  });
+
+  gsap.to(modalContent, {
+    scale: 1,
+    opacity: 1,
+    duration: 0.4,
+    ease: 'back.out(1.7)', // Gives a slight bounce effect
+    delay: 0.1
+  });
+}
+
+// Close Modal Function
+function closeModal() {
+  gsap.to(modalContent, {
+    scale: 0.7,
+    opacity: 0,
+    duration: 0.3,
+    ease: 'power2.in'
+  });
+
+  gsap.to(resetModal, {
+    opacity: 0,
+    display: 'none',
+    duration: 0.3,
+    delay: 0.2
+  });
+}
+
+// Event Listeners
+resetBtn.addEventListener('click', () => {
+  setTimeout(openModal, 0); // Optional delay
+});
+
+closeBtn.addEventListener('click', closeModal);
+
+// Optional: Close modal when clicking outside
+resetModal.addEventListener('click', (e) => {
+  if (e.target === resetModal) {
+    closeModal();
+  }
+});
+
+
+
+
