@@ -179,20 +179,24 @@ body::after {
 }
 
 .action-btn {
-    font-family: 'poppins';
     background: linear-gradient(45deg, #6e00ff, #00d0ff);
-    a{
-        color: white;
-        text-decoration: none;
-    }
+    text-decoration: none;
     border: none;
     padding: 15px;
     border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
     cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    button {
+        border: none;
+        background-color: transparent;
+        color: white;
+        font-family: 'poppins';
+        font-size: 1rem;
+        font-weight: 500;
+    }
 }
 
 .action-btn:hover {
@@ -522,8 +526,8 @@ body::after {
         margin-left: -5%; /* Compensate for the extra width */
     }
 
-    .action-btn {
-        padding: 12px;
+    .action-btn{
+        padding: 0px;
     }
 
     .social-btn {
@@ -611,8 +615,8 @@ body::after {
     }
 
     .action-btn {
-        padding: 12px;
-        font-size: 1rem;
+        padding: 0px;
+        font-size: .8rem;
         margin-bottom: 15px;
         width: 100%;
     }
@@ -782,8 +786,8 @@ body::after {
         font-size: 0.7rem;
     }
 
-    .action-btn {
-        padding: 8px;
+    .action-btn{
+        padding: 0px;
         font-size: 0.8rem;
         margin-bottom: 10px;
     }
