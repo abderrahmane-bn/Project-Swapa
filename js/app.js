@@ -1,4 +1,5 @@
 
+
 gsap.to(".hero-img", {
   y: 30, // Moves up & down by 30px
   duration: 1.5,// Time for one complete motion
@@ -238,26 +239,6 @@ window.onbeforeunload = function () {
 
 // light-dark mode 
 
-
-/*
-document.addEventListener("DOMContentLoaded", function () {
-  const toggleCheckbox = document.getElementById("checkbox"); // Use a single valid ID
-  const root = document.documentElement; // Target <html> for CSS variables
-
-  // Load saved theme from localStorage or default to light
-  const savedTheme = localStorage.getItem("theme") || "light";
-  root.setAttribute("data-theme", savedTheme);
-  toggleCheckbox.checked = savedTheme === "dark";
-
-  // Toggle theme when checkbox is clicked
-  toggleCheckbox.addEventListener("change", function () {
-      const newTheme = toggleCheckbox.checked ? "dark" : "light";
-      root.setAttribute("data-theme", newTheme);
-      localStorage.setItem("theme", newTheme);
-  });
-});
-*/ 
-
 document.addEventListener("DOMContentLoaded", function () {
   const toggleCheckbox = document.getElementById("checkbox"); // Ensure correct ID
   const root = document.documentElement; // Target <html> for CSS variables
@@ -278,7 +259,6 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.setItem("theme", newTheme);
   });
 });
-
 
 
 
