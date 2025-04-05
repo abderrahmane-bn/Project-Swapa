@@ -15,9 +15,11 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 40px;
+    padding: 1rem 30px;
     border-bottom: 1px solid var(--border);
     background-color: var(--card-bg);
+    position: relative;
+    z-index: 1001; /* Increase header z-index */
 }
 
 .logo a {
@@ -39,7 +41,9 @@ header {
 .nav-right {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2rem;
+    position: relative;
+    z-index: 1002; /* Ensure nav is above other elements */
 }
 
 i {
@@ -61,11 +65,6 @@ img {
     position: relative;
 }
 
-
-
-
-
-
 .mission-item i:active {
     color: var(--primary-light);
 }
@@ -80,7 +79,7 @@ img {
     border: 1px solid var(--border);
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    z-index: 1500; /* Increased z-index for dropdown lists */
     overflow: hidden;
     animation: fadeIn 0.2s ease-out;
 }
@@ -329,6 +328,8 @@ img {
     align-items: center;
     padding: 0.8rem 40px;
     background-color: var(--background);
+    position: relative;
+    z-index: 1000; /* Ensure secondhdr is above main but below header */
 }
 
 .wallet-container {
@@ -360,13 +361,12 @@ img {
     position: absolute;
     top: 110%;
     left: 0;
-    /* Changed from transform: translateX(10px) */
     min-width: 320px;
     background-color: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    z-index: 1500; /* Match other lists */
     overflow: hidden;
     animation: fadeIn 0.2s ease-out;
 }
@@ -428,6 +428,8 @@ main {
     align-items: center;
     justify-content: center;
     background-color: var(--background);
+    position: relative;
+    z-index: 999; /* Lower than headers but high enough for content */
 }
 
 .search-container {
@@ -489,20 +491,7 @@ main .search-container i {
 }
 
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .search-container {
-        width: 80%;
-    }
 
-    .nav-right {
-        gap: 1rem;
-    }
-
-    .list {
-        min-width: 280px;
-    }
-}
 
 
 /* ChatGPT-style Settings Modal */
@@ -516,7 +505,7 @@ main .search-container i {
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 2000;
+    z-index: 3000; /* Higher than any dropdown */
     opacity: 0;
     transition: opacity 0.2s ease;
 }
@@ -573,12 +562,13 @@ main .search-container i {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s, color 0.2s;
+    transition: all 0.2s, color 0.2s;
 }
 
 .close-btn:hover {
     background-color: var(--hover-bg);
     color: var(--text-primary);
+    transform: scale(1.05);
 }
 
 /* Custom scrollbar */
@@ -636,7 +626,7 @@ main .search-container i {
 }
 
 .setting-item:hover {
-    background-color: var(--hover-bg);
+    background-color: var(--border);
 }
 
 .setting-info {
@@ -776,4 +766,80 @@ main .search-container i {
     color: var(--text-tertiary);
     font-size: 0.8rem;
     border-top: 1px solid var(--border);
+}
+
+/* Update the responsive adjustments section of your CSS */
+@media (max-width: 768px) {
+    .search-container {
+        width: 80%;
+    }
+
+    .nav-right {
+        gap: 1rem;
+    }
+
+    .list {
+        min-width: 280px;
+        position: absolute; /* Change back to absolute from fixed */
+        right: 0; /* Reset right value */
+        top: 110%; /* Use percentage-based positioning like in desktop */
+        z-index: 2000;
+    }
+    .settings-section .btn {
+        font-weight: 500;
+        padding: 3px 10px;
+        font-size: 0.9rem;
+    }
+    /* Remove the specific positioning for each dropdown */
+    /* Instead, let them inherit the default positioning from non-mobile styles */
+    
+    /* For the mission list which needs special positioning */
+    .mission-container .mission-list {
+        left: 0;
+        right: auto;
+    }
+}
+
+@media (max-width: 400px) {
+    .settings-sidebar {
+        width: 95%;
+        height: 90vh;
+        border-radius: 20px;
+    }
+
+    .settings-header h2 {
+        font-size: 1rem;
+    }
+
+    .close-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
+    }
+    
+    /* Update the list styles for very small screens */
+    .list {
+        min-width: 240px;
+        max-width: 95%;
+        position: absolute; /* Keep as absolute */
+        top: 110%; /* Consistent with desktop positioning */
+        right: 0; /* Align with parent */
+    }
+    
+    .setting-item {
+        padding: 10px 12px;
+    }
+    
+    .btn {
+        padding: 2px 10px;
+        font-size: .9rem;
+    }
+
+    .setting-title {
+        font-size: 0.85rem;
+    }
+
+    .setting-description {
+        font-size: 0.7rem;
+    }
 }
