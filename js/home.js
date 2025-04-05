@@ -1,3 +1,4 @@
+// Update your document.addEventListener("DOMContentLoaded") function to include GSAP animations
 document.addEventListener("DOMContentLoaded", function () {
   // Get all dropdown containers
   const containers = document.querySelectorAll(".container");
@@ -5,29 +6,83 @@ document.addEventListener("DOMContentLoaded", function () {
   // Add click listeners to all containers
   containers.forEach((container) => {
     const icon = container.querySelector(".icon");
+    const list = container.querySelector(".list");
 
-    if (icon) {
+    if (icon && list) {
+      // Set initial state for GSAP animations
+      gsap.set(list, { 
+        opacity: 0,
+        y: -20,
+        scale: 0.95,
+        transformOrigin: "top right"
+      });
+
       icon.addEventListener("click", function (e) {
         e.stopPropagation();
 
         // Close all other open dropdowns
         containers.forEach((otherContainer) => {
-          if (otherContainer !== container) {
-            otherContainer.classList.remove("active");
+          if (otherContainer !== container && otherContainer.classList.contains("active")) {
+            // Animate closing of other dropdowns
+            const otherList = otherContainer.querySelector(".list");
+            gsap.to(otherList, {
+              opacity: 0,
+              y: -20,
+              scale: 0.95,
+              duration: 0.25,
+              ease: "power2.out",
+              onComplete: () => {
+                otherContainer.classList.remove("active");
+              }
+            });
           }
         });
 
-        // Toggle current dropdown
-        container.classList.toggle("active");
+        // Toggle current dropdown with animation
+        if (!container.classList.contains("active")) {
+          // Opening animation
+          container.classList.add("active");
+          gsap.to(list, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.3,
+            ease: "back.out(1.2)"
+          });
+        } else {
+          // Closing animation
+          gsap.to(list, {
+            opacity: 0,
+            y: -20,
+            scale: 0.95,
+            duration: 0.25,
+            ease: "power2.in",
+            onComplete: () => {
+              container.classList.remove("active");
+            }
+          });
+        }
       });
     }
   });
 
-  // Close dropdowns when clicking outside
+  // Close dropdowns when clicking outside with animation
   document.addEventListener("click", function (e) {
     if (!e.target.closest(".container")) {
       containers.forEach((container) => {
-        container.classList.remove("active");
+        if (container.classList.contains("active")) {
+          const list = container.querySelector(".list");
+          gsap.to(list, {
+            opacity: 0,
+            y: -20,
+            scale: 0.95,
+            duration: 0.25,
+            ease: "power2.in",
+            onComplete: () => {
+              container.classList.remove("active");
+            }
+          });
+        }
       });
     }
   });
@@ -38,43 +93,138 @@ document.addEventListener("DOMContentLoaded", function () {
     markAllReadBtn.addEventListener("click", function (e) {
       e.stopPropagation();
 
-      // Remove unread class and notification dots
+      // Remove unread class and notification dots with animation
       const unreadItems = document.querySelectorAll(".unread");
-      unreadItems.forEach((item) => {
-        item.classList.remove("unread");
+      unreadItems.forEach((item, index) => {
         const dot = item.querySelector(".notification-dot");
         if (dot) {
-          dot.style.display = "none";
+          // Animate the dot disappearing
+          gsap.to(dot, {
+            scale: 0,
+            opacity: 0,
+            duration: 0.3,
+            delay: index * 0.05,
+            ease: "power2.in",
+            onComplete: () => {
+              dot.style.display = "none";
+              item.classList.remove("unread");
+            }
+          });
+        } else {
+          item.classList.remove("unread");
         }
       });
 
-      // Update badge
+      // Update badge with animation
       const badge = document.querySelector(".notification-icon .badge");
       if (badge) {
-        badge.style.display = "none";
+        gsap.to(badge, {
+          scale: 0,
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.in",
+          onComplete: () => {
+            badge.style.display = "none";
+          }
+        });
       }
     });
   }
 
-  // Search suggestions
+  // Search suggestions animation
   const searchInput = document.querySelector('input[type="search"]');
   const suggestionTags = document.querySelectorAll(".suggestion-tag");
 
   if (searchInput && suggestionTags.length) {
-    suggestionTags.forEach((tag) => {
+    suggestionTags.forEach((tag, index) => {
       tag.addEventListener("click", function () {
-        searchInput.value = tag.textContent;
-        searchInput.focus();
+        // Add a small bounce animation when clicking a tag
+        gsap.to(tag, {
+          scale: 1.1,
+          duration: 0.2,
+          ease: "power1.out",
+          onComplete: () => {
+            gsap.to(tag, {
+              scale: 1,
+              duration: 0.2,
+              ease: "power1.in"
+            });
+            searchInput.value = tag.textContent;
+            searchInput.focus();
+          }
+        });
+      });
+
+      // Add hover animations
+      tag.addEventListener("mouseenter", () => {
+        gsap.to(tag, {
+          y: -3,
+          duration: 0.2,
+          ease: "power1.out"
+        });
+      });
+
+      tag.addEventListener("mouseleave", () => {
+        gsap.to(tag, {
+          y: 0,
+          duration: 0.2,
+          ease: "power1.in"
+        });
       });
     });
   }
 
-  // Add animation classes for smoother transitions
-  document.querySelectorAll(".list").forEach((list) => {
-    list.addEventListener("animationend", function () {
-      this.classList.add("animation-done");
+  // Settings modal animations
+  const modal = document.getElementById("modal");
+  const settingBtn = document.getElementById("settingbtn");
+  const closeBtn = document.getElementById("closeSettingsBtn");
+  
+  if (settingBtn && modal) {
+    const settingsSidebar = modal.querySelector(".settings-sidebar");
+    
+    // Set initial state
+    gsap.set(settingsSidebar, {
+      opacity: 0,
+      y: 30
     });
-  });
+    
+    // Open modal with animation
+    settingBtn.addEventListener("click", function() {
+      modal.classList.add("active");
+      document.body.style.overflow = "hidden";
+      
+      gsap.to(settingsSidebar, {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: "power2.out"
+      });
+    });
+    
+    // Close modal with animation
+    function closeModal() {
+      gsap.to(settingsSidebar, {
+        opacity: 0,
+        y: 30,
+        duration: 0.3,
+        ease: "power2.in",
+        onComplete: () => {
+          modal.classList.remove("active");
+          document.body.style.overflow = "auto";
+        }
+      });
+    }
+    
+    if (closeBtn) {
+      closeBtn.addEventListener("click", closeModal);
+    }
+    
+    modal.addEventListener("click", function(e) {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  }
 });
 
 //dark mode button
