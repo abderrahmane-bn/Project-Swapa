@@ -264,6 +264,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-
-
-
