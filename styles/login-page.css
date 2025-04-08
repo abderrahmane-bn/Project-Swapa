@@ -251,6 +251,10 @@ body::after {
         align-items: center;
         justify-content: center;
     }
+    i{
+        font-size: 2rem;
+        color: var(--text-primary);
+    }
 }
 
 .social-btn:hover {
