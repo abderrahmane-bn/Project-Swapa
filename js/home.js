@@ -321,6 +321,7 @@ document.addEventListener("DOMContentLoaded", function () {
         scale: 0.8,
         stagger: 0.1,
         ease: "back.out(1.7)",
+        
       },
       "-=0.4"
     );
@@ -333,7 +334,7 @@ window.addEventListener("load", () => {
 });
 
 //settings
-// Modal JavaScript
+
 document.addEventListener("DOMContentLoaded", function () {
   const modal = document.getElementById("modal");
   const settingBtn = document.getElementById("settingbtn");
@@ -418,334 +419,19 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-/*document.addEventListener("DOMContentLoaded", function () {
-  // Search functionality
-  const searchContainer = document.querySelector(".search-container");
-  const searchInput = document.querySelector('input[type="search"]');
-  const searchSuggestions = document.querySelector(".search-suggestions");
-  const mainContent = document.querySelector("main");
-  const rightelement = document.querySelectorAll(".right-ele");
-  const leftelement = document.querySelectorAll(".left-ele");
-
-  // Create a container for search results
-  const searchResultsContainer = document.createElement("div");
-  searchResultsContainer.className = "search-results";
-  searchResultsContainer.style.display = "none";
-  mainContent.appendChild(searchResultsContainer);
-
-  // Create a back button for returning to home
-  const backButton = document.createElement("button");
-  backButton.className = "back-button";
-  backButton.innerHTML = '<i class="fa-solid fa-arrow-left"></i> Back';
-  backButton.style.display = "none";
-  mainContent.insertBefore(backButton, searchContainer);
-
-  // Sample profile data (you would normally fetch this from a server)
-  const profileData = [
-    {
-      name: "Python Expert",
-      skills: ["Python", "Django", "Flask", "Machine Learning"],
-      experience: "5 years",
-      rating: 4.8,
-      image: "icons/profile.png",
-      tags: ["python", "machine learning", "web development", "data science"],
-    },
-    {
-      name: "JavaScript Developer",
-      skills: ["JavaScript", "React", "Node.js", "Vue"],
-      experience: "4 years",
-      rating: 4.7,
-      image: "icons/profile.png",
-      tags: ["javascript", "web development", "react", "node.js"],
-    },
-    {
-      name: "Data Scientist",
-      skills: ["Python", "R", "TensorFlow", "Data Visualization"],
-      experience: "6 years",
-      rating: 4.9,
-      image: "icons/profile.png",
-      tags: ["python", "machine learning", "data science", "r"],
-    },
-    {
-      name: "Web Developer",
-      skills: ["HTML", "CSS", "JavaScript", "PHP"],
-      experience: "3 years",
-      rating: 4.5,
-      image: "icons/profile.png",
-      tags: ["web development", "javascript", "php", "html", "css"],
-    },
-  ];
-
-  // Animation timeline for search expansion
-  let searchExpandTl = gsap.timeline({ paused: true });
-
-  // Get the initial position of the search container
-  const searchContainerRect = searchContainer.getBoundingClientRect();
-  const initialTop = searchContainerRect.top;
-  const isMobile = window.innerWidth <= 768;
-  
-  searchExpandTl
-    .to(rightelement, {
-      x: 100,
-      opacity: 0,
-      ease: "power2.inOut",
-      duration: 0.5,
-      stagger: 0.3,
-    })
-    .to(
-      leftelement,
-      {
-        x: -100,
-        opacity: 0,
-        ease: "power2.inOut",
-        duration: 0.5,
-        stagger: 0.3,
-      },
-      "-=0.5"
-    )
-
-    .set(
-      searchContainer,
-      {
-        position: "fixed",
-        top: initialTop + "px", // Set the initial position explicitly
-        left: searchContainerRect.left + "px",
-        width: searchContainerRect.width + "px",
-      },
-      "-=0.6"
-    )
-    .to(
-      searchContainer,
-      {
-        top: "15px", // Animate to the top
-        left: "50%", // Center horizontally
-        xPercent: -50, // Adjust for center alignment
-        duration: 0.5,
-        zIndex: 1000,
-        ease: "power2.inOut",
-      },
-      "-=0.6"
-    )
-    .to(
-      mainContent,
-      {
-        duration: 0.4,
-        ease: "power2.inOut",
-      },
-      "-=0.5"
-    )
-
-    .to(
-      searchSuggestions,
-      {
-        opacity: 0,
-        scale: 0.1,
-        duration: 0.3,
-        display: "none",
-        ease: "power2.inOut",
-        stagger: 0.2,
-      },
-      "-=0.8"
-    )
-    .to(
-      backButton,
-      {
-        display: "flex",
-        opacity: 1,
-        duration: 0.3,
-        ease: "power2.inOut",
-      },
-      "-=0.2"
-    );
-
-  // Function to create profile cards
-  function createProfileCard(profile) {
-    const card = document.createElement("div");
-    card.className = "profile-card";
-
-    // Create rating stars
-    const stars = Array(5)
-      .fill()
-      .map((_, i) => {
-        return i < Math.floor(profile.rating)
-          ? '<i class="fa-solid fa-star"></i>'
-          : i === Math.floor(profile.rating) && profile.rating % 1 >= 0.5
-          ? '<i class="fa-solid fa-star-half-stroke"></i>'
-          : '<i class="fa-regular fa-star"></i>';
-      })
-      .join("");
-
-    // Create skill tags
-    const skillTags = profile.skills
-      .map((skill) => `<span class="skill-tag">${skill}</span>`)
-      .join("");
-
-    card.innerHTML = `
-      <div class="profile-card-header">
-        <img src="${profile.image}" alt="${profile.name}" class="profile-image">
-        <div class="profile-info">
-          <h3>${profile.name}</h3>
-          <div class="profile-rating">
-            ${stars}
-            <span class="rating-value">${profile.rating}</span>
-          </div>
-          <div class="profile-experience">${profile.experience} experience</div>
-        </div>
-      </div>
-      <div class="profile-skills">
-        ${skillTags}
-      </div>
-      <div class="buttons-container">
-        <button class="contact-button">Contact</button>
-        <button class="contact-button">View Profile</button>
-      </div>
-    `;
-
-    return card;
-  }
-
-  // Function to filter profiles based on search query
-  function filterProfiles(query) {
-    if (!query) return [];
-
-    query = query.toLowerCase();
-    return profileData.filter((profile) => {
-      // Check if query matches name, skills or tags
-      const nameMatch = profile.name.toLowerCase().includes(query);
-      const skillMatch = profile.skills.some((skill) =>
-        skill.toLowerCase().includes(query)
-      );
-      const tagMatch = profile.tags.some((tag) => tag.includes(query));
-
-      return nameMatch || skillMatch || tagMatch;
-    });
-  }
-
-  // Function to display search results
-  function displaySearchResults(query) {
-    // Clear previous results
-    searchResultsContainer.innerHTML = "";
-
-    // Filter profiles
-    const matchedProfiles = filterProfiles(query);
-
-    // Show message if no results
-    if (matchedProfiles.length === 0) {
-      const noResults = document.createElement("div");
-      noResults.className = "no-results";
-      noResults.innerHTML = `
-        <i class="fa-solid fa-search"></i>
-        <h3>No profiles found for "${query}"</h3>
-        <p>Try different keywords or browse all profiles</p>
-      `;
-      searchResultsContainer.appendChild(noResults);
-    } else {
-      // Create and append profile cards
-      matchedProfiles.forEach((profile) => {
-        const card = createProfileCard(profile);
-        searchResultsContainer.appendChild(card);
-      });
-    }
-
-    // Show results container with animation
-    searchResultsContainer.style.display = "flex";
-    gsap.fromTo(
-      searchResultsContainer,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
-    );
-  }
-
-  // Function to revert to home view
-  function revertToHomeView() {
-    // Reverse search animation
-    searchExpandTl.reverse();
-
-    // Hide search results with animation
-    gsap.to(searchResultsContainer, {
-      opacity: 0,
-      y: 20,
-      duration: 0.3,
-      onComplete: () => {
-        searchResultsContainer.style.display = "none";
-
-        // Reset the search container position after animation completes
-        if (searchExpandTl.progress() === 0) {
-          searchContainer.style.position = "";
-          searchContainer.style.top = "";
-          searchContainer.style.left = "";
-          searchContainer.style.width = "";
-          searchContainer.style.transform = "";
-
-          // Show search suggestions again
-          gsap.to(searchSuggestions, {
-            display: "flex",
-            opacity: 1,
-            scale: 1,
-            duration: 0.4,
-          });
-        }
-      },
-    });
-
-    // Clear search input
-    searchInput.value = "";
-  }
-
-  // Handle search input focus
-  searchInput.addEventListener("focus", function () {
-    searchExpandTl.play();
-  });
-
-  // Handle search input keypress
-  searchInput.addEventListener("keypress", function (e) {
-    if (e.key === "Enter" && searchInput.value.trim() !== "") {
-      displaySearchResults(searchInput.value.trim());
-    }
-  });
-
-  // Handle back button click
-  backButton.addEventListener("click", revertToHomeView);
-
-  // Handle suggestion tag clicks
-  const suggestionTags = document.querySelectorAll(".suggestion-tag");
-  suggestionTags.forEach((tag) => {
-    tag.addEventListener("click", function () {
-      // Add bounce animation
-      gsap.to(tag, {
-        scale: 1.1,
-        duration: 0.2,
-        ease: "power1.out",
-        onComplete: () => {
-          gsap.to(tag, {
-            scale: 1,
-            duration: 0.2,
-            ease: "power1.in",
-          });
-          // Set search input value
-          searchInput.value = tag.textContent;
-          // Trigger search expansion
-          searchExpandTl.play();
-          // Display search results with slight delay
-          setTimeout(() => {
-            displaySearchResults(tag.textContent);
-          }, 300);
-        },
-      });
-    });
-  });
-});
-*/ 
+// Search functionality
 document.addEventListener("DOMContentLoaded", function () {
   // Search functionality
   const searchContainer = document.querySelector(".search-container");
   const searchInput = document.querySelector('input[type="search"]');
   const searchSuggestions = document.querySelector(".search-suggestions");
+  const head2 = document.querySelector(".secondhdr");
+  const suggestions = document.querySelectorAll(".suggestion-tag");
   const mainContent = document.querySelector("main");
   const rightelement = document.querySelectorAll(".right-ele");
   const leftelement = document.querySelectorAll(".left-ele");
 
-  // Create a container for search results
+  // Create a container for search results with proper positioning
   const searchResultsContainer = document.createElement("div");
   searchResultsContainer.className = "search-results";
   searchResultsContainer.style.display = "none";
@@ -756,7 +442,7 @@ document.addEventListener("DOMContentLoaded", function () {
   backButton.className = "back-button";
   backButton.innerHTML = '<i class="fa-solid fa-arrow-left"></i> <span class="back-text">Back</span>';
   backButton.style.display = "none";
-  mainContent.insertBefore(backButton, searchContainer);
+  document.body.appendChild(backButton);
 
   // Sample profile data
   const profileData = [
@@ -794,131 +480,130 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   ];
 
-  // Animation timeline for search expansion
-  let searchExpandTl = gsap.timeline({ paused: true });
-
-  // Get the initial position of the search container
-  const searchContainerRect = searchContainer.getBoundingClientRect();
-  const initialTop = searchContainerRect.top;
-  const isMobile = window.innerWidth <= 768;
+  // Variable to store original search container position
+  let originalSearchPosition = {};
+  let originalSearchStyles = {};
   
-  // Function to set up the search animation
-  function setupSearchAnimation() {
-    // Clear any existing animation
-    searchExpandTl.clear();
+  // Add a flag to track if search animation has already played
+  let searchAnimationPlayed = false;
+  
+  // Add a variable to track animation duration
+  const animationDuration = 0.7; // in seconds
+
+  // Function to perform search animation
+  function performSearchAnimation(callback) {
+    // If animation has already played, skip it and call callback immediately
+    if (searchAnimationPlayed) {
+      if (callback) callback();
+      return;
+    }
     
-    // Determine if we're in mobile mode
+    // Get current position and dimensions of search container
+    const searchContainerRect = searchContainer.getBoundingClientRect();
     const isMobile = window.innerWidth <= 768;
+  
+    // Store original position and styles for later use
+    originalSearchPosition = {
+      top: searchContainerRect.top,
+      left: searchContainerRect.left,
+      width: searchContainerRect.width
+    };
+  
+    // Store original styles
+    originalSearchStyles = {
+      position: searchContainer.style.position,
+      top: searchContainer.style.top,
+      left: searchContainer.style.left,
+      width: searchContainer.style.width,
+      transform: searchContainer.style.transform
+    };
+  
+    // Fix search container position to current location before animating
+    searchContainer.style.position = "fixed";
+    searchContainer.style.top = originalSearchPosition.top + "px";
+    searchContainer.style.left = originalSearchPosition.left + "px";
+    searchContainer.style.width = originalSearchPosition.width + "px";
+    searchContainer.style.zIndex = "1000";
+  
+    // Critical: Ensure any existing transforms are cleared
+    searchContainer.style.transform = "none";
+  
+    // Create a timeline for search animation
+    const tl = gsap.timeline({
+      onComplete: function() {
+        // Call the callback function when animation completes
+        if (callback) callback();
+        
+        // Set flag to indicate animation has played
+        searchAnimationPlayed = true;
+      }
+    });
+  
+    // Add animations to the timeline
+    tl.to(rightelement, {
+      x: 100,
+      opacity: 0,
+      ease: "power2.inOut",
+      duration: 0.5,
+      stagger: 0.2
+    })
+    .to(leftelement, {
+      x: -100,
+      opacity: 0,
+      ease: "power2.inOut",
+      duration: 0.5,
+      stagger: 0.2
+    }, "<")
     
-    // Create animation sequence
-    searchExpandTl
-      .to(rightelement, {
-        x: 100,
-        opacity: 0,
-        ease: "power2.inOut",
-        duration: 0.5,
-        stagger: 0.3,
-      })
-      .to(
-        leftelement,
-        {
-          x: -100,
-          opacity: 0,
-          ease: "power2.inOut",
-          duration: 0.5,
-          stagger: 0.3,
-        },
-        "-=0.5"
-      )
-      .set(
-        searchContainer,
-        {
-          position: "fixed",
-          top: initialTop + "px",
-          left: searchContainerRect.left + "px",
-          width: searchContainerRect.width + "px",
-        },
-        "-=0.6"
-      );
+    .to(suggestions, {
+      opacity: 0,
+      
+      scale: 0.8,
+      stagger: 0.1,
+      duration: 0.2,
+      ease: "power2.inOut",
+      onComplete: () => {
+        
+        suggestions.style.opacity = "1";
+        suggestions.style.scale = "1"; // Reset scale
+        suggestions.style.display = "none"; // Hide after animation
+      }
+    }, "<")
     
-    // Different animation for mobile and desktop
-    if (isMobile) {
-      // Mobile: position search next to back button
-      searchExpandTl.to(
-        searchContainer,
-        {
-          top: "15px",
-          left: "70px", // Position to the right of back button
-          width: "calc(100% - 85px)", // Leave space for back button
-          duration: 0.5,
-          zIndex: 1000,
-          ease: "power2.inOut",
-        },
-        "-=0.6"
-      );
-    } else {
-      // Desktop: center the search
-      searchExpandTl.to(
-        searchContainer,
-        {
-          top: "15px",
-          left: "50%",
-          xPercent: -50,
-          duration: 0.5,
-          zIndex: 1000,
-          ease: "power2.inOut",
-        },
-        "-=0.6"
-      );
-    }
     
-    searchExpandTl
-      .to(
-        mainContent,
-        {
-          duration: 0.4,
-          ease: "power2.inOut",
-        },
-        "-=0.5"
-      )
-      .to(
-        searchSuggestions,
-        {
-          opacity: 0,
-          scale: 0.1,
-          duration: 0.3,
-          display: "none",
-          ease: "power2.inOut",
-          stagger: 0.2,
-        },
-        "-=0.8"
-      )
-      .to(
-        backButton,
-        {
-          display: "flex",
-          opacity: 1,
-          duration: 0.3,
-          ease: "power2.inOut",
-        },
-        "-=0.2"
-      );
+    // Add search container animation based on device type
+if (isMobile) {
+  tl.to(searchContainer, {
+    top: "15px",
+    left: "70px",
+    width: "calc(100% - 85px)",
+    duration: 0.5,
+    ease: "power2.inOut"
+  }, "-=0.5");
+} else {
+  tl.to(searchContainer, {
+    top: "15px",
+    left: "50%",
+    xPercent: -50,
+    duration: 0.5,
+    ease: "power2.inOut"
+  }, "-=0.5");
+}
+    tl.to(mainContent, {
+      zIndex: 2000,
+      y: 0,
+      ease: "power2.inOut",
+      duration: 0.3,
+      delay: 0.
+    }, "-=0.6");
+    // Show back button
+    backButton.style.display = "flex";
+    tl.fromTo(backButton, 
+      { opacity: 0, x: -20, scale: 0.8 },
+      { opacity: 1, x: 0, scale: 1, duration: 0.2, ease: "power2.inOut" },
+      0.3
+    );
   }
-
-  // Initialize animation on load
-  setupSearchAnimation();
-
-  // Update animation on window resize
-  window.addEventListener('resize', function() {
-    // Get new initial position of search container
-    const newRect = searchContainer.getBoundingClientRect();
-    
-    // Only update if we've crossed the mobile threshold
-    if ((window.innerWidth <= 768 && !isMobile) || 
-        (window.innerWidth > 768 && isMobile)) {
-      setupSearchAnimation();
-    }
-  });
 
   // Function to create profile cards
   function createProfileCard(profile) {
@@ -983,14 +668,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Function to display search results
-  function displaySearchResults(query) {
+  // Function to render search results
+  function renderSearchResults(query) {
     // Clear previous results
     searchResultsContainer.innerHTML = "";
-
+  
     // Filter profiles
     const matchedProfiles = filterProfiles(query);
-
+    
     // Show message if no results
     if (matchedProfiles.length === 0) {
       const noResults = document.createElement("div");
@@ -1008,58 +693,128 @@ document.addEventListener("DOMContentLoaded", function () {
         searchResultsContainer.appendChild(card);
       });
     }
-
-    // Show results container with animation
+  
+    // Show results container with improved animation
     searchResultsContainer.style.display = "flex";
     gsap.fromTo(
       searchResultsContainer,
-      { opacity: 0, y: 20 },
+      { opacity: 0, y: -20 },
       { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
     );
+    
+    // Ensure the page doesn't scroll when showing results
+    document.body.style.overflow = "hidden";
+  }
+
+  // Function to display search results
+  function displaySearchResults(query) {
+    // First perform the animation, then render results after animation completes
+    performSearchAnimation(() => {
+      renderSearchResults(query);
+    });
   }
 
   // Function to revert to home view
   function revertToHomeView() {
-    // Reverse search animation
-    searchExpandTl.reverse();
+    const tl = gsap.timeline();
+    // Hide back button first
+    tl
+    .to(backButton, {
+      opacity: 0,
+      x: -20,
+      scale: 0.8,
+      duration: 0.3,
+      onComplete: () => {
+        backButton.style.display = "none";
+        backButton.style.x = 0;
+        backButton.style.scale = 1;
+      }
+    })
 
     // Hide search results with animation
-    gsap.to(searchResultsContainer, {
+    .to(searchResultsContainer, {
       opacity: 0,
       y: 20,
       duration: 0.3,
       onComplete: () => {
         searchResultsContainer.style.display = "none";
+        searchResultsContainer.style.marginTop = "0"; // Reset margin
+      }
+    }, "-=0.3");
 
-        // Reset the search container position after animation completes
-        if (searchExpandTl.progress() === 0) {
-          searchContainer.style.position = "";
-          searchContainer.style.top = "";
-          searchContainer.style.left = "";
-          searchContainer.style.width = "";
-          searchContainer.style.transform = "";
+    // Animate search container back to original position
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+      gsap.to(searchContainer, {
+        top: originalSearchPosition.top + "px",
+        left: originalSearchPosition.left + "px",
+        width: originalSearchPosition.width + "px",
+        duration: 0.5,
+        ease: "power2.inOut",
+        clearProps: "all", // Clear all properties after animation
+        onComplete: completeReturn
+      });
+    } else {
+      gsap.to(searchContainer, {
+        top: originalSearchPosition.top + "px",
+        left: originalSearchPosition.left + "px",
+        width: originalSearchPosition.width + "px",
+        xPercent: 0, // Remove any percentage-based transforms
+        duration: 0.5,
+        ease: "power2.inOut",
+        clearProps: "all", // Clear all properties after animation
+        onComplete: completeReturn
+      });
+    }
 
-          // Show search suggestions again
-          gsap.to(searchSuggestions, {
-            display: "flex",
-            opacity: 1,
-            scale: 1,
-            duration: 0.4,
-          });
-        }
-      },
-    });
+    function completeReturn() {
+      // Restore original styles completely
+      for (const prop in originalSearchStyles) {
+        searchContainer.style[prop] = originalSearchStyles[prop];
+      }
+    
+      // Create a GSAP timeline
+      const tl = gsap.timeline();
+    
+      // Add animations to the timeline
+      tl.to(rightelement, {
+        x: 0,
+        opacity: 1,
+        ease: "power2.inOut",
+        duration: 0.5,
+        stagger: 0.2
+      })
+      .to(leftelement, {
+        x: 0,
+        opacity: 1,
+        ease: "power2.inOut",
+        duration: 0.5,
+        stagger: 0.2
+      }, "<") // Use "<" to start this animation at the same time as the previous one
+      .to(mainContent, {
+        zIndex: 1,
+        ease: "power2.inOut",
+        duration: 0.5,
+      }, "<") // Start this animation at the same time as the previous one
+      .to(suggestions, {
+        display: "flex",
+        opacity: 1,
+        scale: 1,
+        stagger: 0.1,
+        duration: 0.4,
+        ease: "power2.inOut"
+      }, "-=0.5"); 
+    }
 
     // Clear search input
     searchInput.value = "";
+    
+    // Reset the animation played flag when returning to home
+    searchAnimationPlayed = false;
   }
 
-  // Handle search input focus
-  searchInput.addEventListener("focus", function () {
-    searchExpandTl.play();
-  });
-
-  // Handle search input keypress
+  // Handle search input keypress - animation only starts on Enter
   searchInput.addEventListener("keypress", function (e) {
     if (e.key === "Enter" && searchInput.value.trim() !== "") {
       displaySearchResults(searchInput.value.trim());
@@ -1083,16 +838,14 @@ document.addEventListener("DOMContentLoaded", function () {
             scale: 1,
             duration: 0.2,
             ease: "power1.in",
+            onComplete: () => {
+              // Set search input value
+              searchInput.value = tag.textContent;
+              // Display search results 
+              displaySearchResults(tag.textContent);
+            }
           });
-          // Set search input value
-          searchInput.value = tag.textContent;
-          // Trigger search expansion
-          searchExpandTl.play();
-          // Display search results with slight delay
-          setTimeout(() => {
-            displaySearchResults(tag.textContent);
-          }, 300);
-        },
+        }
       });
     });
   });
