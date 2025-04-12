@@ -1,9 +1,11 @@
 @import url("style.css");
+
 html {
     max-width: 100%;
     width: 100%;
     overflow: hidden;
 }
+
 body {
     background-color: var(--background);
     height: 100vh;
@@ -14,7 +16,8 @@ body {
     overflow: hidden;
 }
 
-body::before, body::after {
+body::before,
+body::after {
     content: '';
     position: absolute;
     width: 300px;
@@ -93,7 +96,8 @@ body::after {
     transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.login-form, .signup-form {
+.login-form,
+.signup-form {
     position: absolute;
     top: 0;
     left: 0;
@@ -130,6 +134,7 @@ body::after {
     font-weight: 700;
     margin-bottom: 5px;
 }
+
 .login-welcome p {
     font-size: 2rem;
     font-weight: 500;
@@ -140,7 +145,8 @@ body::after {
     position: relative;
 }
 
-.input-group input, .input-group select {
+.input-group input,
+.input-group select {
     font-family: 'poppins';
     width: 100%;
     padding: 15px;
@@ -161,7 +167,8 @@ body::after {
     background-color: var(--card-bg);
 }
 
-.input-group input:focus, .input-group select:focus {
+.input-group input:focus,
+.input-group select:focus {
     outline: none;
     box-shadow: 0px 10px 10px var(--shadow);
     background-color: var(--card-bg);
@@ -189,6 +196,7 @@ body::after {
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
+
     button {
         border: none;
         background-color: transparent;
@@ -203,6 +211,7 @@ body::after {
     transform: translateY(-2px);
     box-shadow: 0 10px 20px var(--shadow);
 }
+
 .action-btn:active {
     background: linear-gradient(45deg, rgb(81, 1, 186), rgb(0, 126, 154));
 }
@@ -215,7 +224,8 @@ body::after {
     font-size: .9rem;
 }
 
-.divider::before, .divider::after {
+.divider::before,
+.divider::after {
     content: '';
     flex: 1;
     height: 1px;
@@ -245,13 +255,15 @@ body::after {
     background-color: var(--card-bg);
     cursor: pointer;
     transition: transform 0.3s, background-color 0.3s;
+
     img {
         width: 25px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    i{
+
+    i {
         font-size: 2rem;
         color: var(--text-primary);
     }
@@ -279,21 +291,43 @@ body::after {
 .checkbox-group {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
 }
 
-.checkbox-group input {
-    width: auto;
-    margin-right: 10px;
-}
+
 
 .checkbox-group label {
     font-size: .9rem;
     color: var(--text-secondary);
 }
-.checkbox-group input[type="checkbox"] {
-    accent-color: var(--primary-light); 
-    border-radius: 20px;
+
+.checkbox-group {
+    cursor: pointer;
+}
+
+.checkbox-group input {
+    display: none;
+}
+
+.checkbox-group svg {
+    overflow: visible;
+}
+
+.path {
+    fill: none;
+    stroke: var(--primary-light);
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
+    stroke-dasharray: 241 9999999;
+    stroke-dashoffset: 0;
+}
+
+.checkbox-group input:checked~svg .path {
+    stroke-dasharray: 70.5096664428711 9999999;
+    stroke-dashoffset: -262.2723388671875;
 }
 
 
@@ -307,11 +341,12 @@ body::after {
     height: 100%;
     display: none;
     justify-content: center;
-    align-items: center; 
-    background-color: rgba(0, 0, 0, 0.7); /* Added overlay */
-  }
-  
-  .modal-content {
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Added overlay */
+}
+
+.modal-content {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -320,44 +355,49 @@ body::after {
     width: 90%;
     padding: 40px;
     border-radius: 20px;
-  }
-  
-  .close-btn {
+}
+
+.close-btn {
     position: absolute;
     top: 10px;
     right: 10px;
     cursor: pointer;
     padding: 5px 10px;
 }
+
 .close-btn:hover {
     background-color: var(--shadow);
     transition: background-color .3s ease;
     border-radius: 50%;
 }
-  
+
 .modal-content h2 {
     font-size: 2rem;
     font-weight: 500;
     padding-bottom: 50px;
     text-align: center;
 }
-  
+
 .modal-content p {
     text-align: center;
     margin: 10px 0;
 }
-.input-group{
+
+.input-group {
     text-align: end;
-    a{
+
+    a {
         color: var(--primary);
     }
+
     a:hover {
         color: var(--primary-light);
     }
 }
-.input-group-code input[type="text"]{
+
+.input-group-code input[type="text"] {
     text-align: center;
-  }
+}
 
 
 /* Enhanced Animation classes */
@@ -374,6 +414,7 @@ body::after {
         transform: translateY(0);
         opacity: 1;
     }
+
     100% {
         transform: translateY(-50px);
         opacity: 0;
@@ -385,6 +426,7 @@ body::after {
         transform: translateY(-50px);
         opacity: 0;
     }
+
     100% {
         transform: translateY(0);
         opacity: 1;
@@ -406,6 +448,7 @@ body::after {
         opacity: 0;
         transform: translateY(-20px);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
@@ -485,8 +528,13 @@ body::after {
     .login-welcome p {
         font-size: 1.2rem;
     }
+
     .toggle-form {
         padding-bottom: 10px;
+    }
+    .checkbox-group {
+        gap: 20px;
+        font-size: .7rem;
     }
 }
 
@@ -494,8 +542,9 @@ body::after {
     .modal-content {
         max-width: 300px;
         padding: 30px 20px;
-    }  
-    .modal-content h2{
+    }
+
+    .modal-content h2 {
         font-size: 1.5rem;
     }
 
@@ -524,13 +573,15 @@ body::after {
     .login-welcome p {
         font-size: 1.5rem;
     }
-    
+
     .input-group input {
-        width: 110%; /* Extend beyond the standard width */
-        margin-left: -5%; /* Compensate for the extra width */
+        width: 110%;
+        /* Extend beyond the standard width */
+        margin-left: -5%;
+        /* Compensate for the extra width */
     }
 
-    .action-btn{
+    .action-btn {
         padding: 0px;
     }
 
@@ -542,10 +593,12 @@ body::after {
     .social-btn img {
         width: 20px;
     }
+
     .toggle-form {
         padding-bottom: 10px;
     }
 }
+
 @media (min-width: 360px) and (max-width: 412px) {
     body {
         min-height: 100vh;
@@ -712,7 +765,9 @@ body::after {
 
 /* Prevent any potential horizontal scrolling */
 @media (min-width: 360px) and (max-width: 412px) {
-    html, body {
+
+    html,
+    body {
         max-width: 100%;
         overflow-x: hidden;
         position: relative;
@@ -790,7 +845,7 @@ body::after {
         font-size: 0.7rem;
     }
 
-    .action-btn{
+    .action-btn {
         padding: 0px;
         font-size: 0.8rem;
         margin-bottom: 10px;
@@ -855,7 +910,9 @@ body::after {
 
 /* Ensure absolute positioning doesn't cause horizontal scroll */
 @media (max-width: 375px) {
-    body, html {
+
+    body,
+    html {
         max-width: 100%;
         overflow-x: hidden;
         position: relative;
