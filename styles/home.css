@@ -512,7 +512,6 @@ main .search-container i {
 .suggestion-tag:hover {
     background-color: var(--primary-light);
     border-color: var(--primary-light);
-    /* Let GSAP handle the transform */
 }
 
 
@@ -1105,7 +1104,9 @@ main .search-container i {
     margin: 0;
     font-size: 0.9rem;
 }
-
+.contact-button{
+    font-family: 'poppins', sans-serif;
+}
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
 
