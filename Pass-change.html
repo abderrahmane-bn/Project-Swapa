@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWAPA | Change your Password</title>
+    <link rel="stylesheet" href="styles/pass-change.css">
+    <link rel="stylesheet" href="styles/var2.css">
+</head>
+<body>
+    <header>
+        <img src="icons/Logo_2__1_-removebg-preview.png" alt="">
+        <h1>SWAPA</h1>
+    </header>
+    <main>
+            <h2>Change your Password</h2>
+            <form action="pass-change.php" method="POST">
+                <div class="input-group">
+                    <label for="new-password">New Password:</label>
+                    <input type="password" id="new-password" name="new-password" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="confirm-password">Confirm New Password:</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+                </div>
+
+                <button class="submitbtn" type="submit"><a href="home.html">Change Password</a></button>
+                <button class="nobtn" type="submit"><a href="home.html">Continue Without Changing</a></button>
+            </form>
+    </main>
+    <script src="js/timer.js"></script>
+</body>
+</html>

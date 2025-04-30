@@ -455,6 +455,25 @@ body::after {
     }
 }
 
+.Reset-btn {
+    /*background: linear-gradient(45deg, #6e00ff, #00d0ff);*/
+    background-color: var(--text-secondary);
+    text-decoration: none;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    color: var(--border);
+    font-family: 'poppins';
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+.Reset-btn:active {
+    background-color: var(--text-primary);
+}
 
 @media (max-width: 1024px) {
     body {
@@ -532,6 +551,7 @@ body::after {
     .toggle-form {
         padding-bottom: 10px;
     }
+
     .checkbox-group {
         gap: 20px;
         font-size: .7rem;
