@@ -10,6 +10,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const pauseButton = document.getElementById('pause-button');
     const resumeButton = document.getElementById('resume-button');
     const endButton = document.getElementById('end-button');
+    
+    // Modal elements
+    const windowModal = document.querySelector('.window');
+    const closeButton = document.querySelector('.x');
+    const cancelButton = document.querySelector('.btn:nth-child(1)');
+    const confirmEndButton = document.querySelector('.btn:nth-child(2)');
+    const reasonCards = document.querySelectorAll('.card');
+    const sessionDurationText = document.querySelector('.window p:nth-of-type(2)');
+    const othericon = document.querySelector('.fa-ellipsis');
+    
+    // Create overlay element if it doesn't exist
+    let overlay = document.querySelector('.overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'overlay';
+        document.body.appendChild(overlay);
+    }
 
     // Timer state
     let seconds = 0;
@@ -48,6 +65,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const minutes = Math.floor(totalSeconds / 60);
         const remainingSeconds = totalSeconds % 60;
         return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+    }
+    
+    // Format session duration for display in the modal
+    function formatSessionDuration(totalSeconds) {
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        
+        if (hours > 0) {
+            return `${hours}hr ${minutes}min ${seconds}sec`;
+        } else if (minutes > 0) {
+            return `${minutes}min ${seconds}sec`;
+        } else {
+            return `${seconds}sec`;
+        }
     }
 
     // Update the timer display
@@ -139,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // End the timer
+    // End the timer - THIS FUNCTION SHOULD ONLY BE CALLED AFTER CONFIRMATION
     function endTimer(initiatingUser) {
         if (isRunning) {
             isRunning = false;
@@ -266,6 +298,99 @@ document.addEventListener('DOMContentLoaded', function() {
         // In a real system, this is where you would call an API to send
         // the notification to the other user via WebSockets, push notifications, etc.
     }
+    
+    // MODAL FUNCTIONS
+    
+    // Show modal function
+    function showModal() {
+        // Update session duration text
+        sessionDurationText.textContent = `Session duration: ${formatSessionDuration(seconds)}`;
+        
+        windowModal.style.display = 'flex';
+        overlay.style.display = 'block';
+        
+        // Add entrance animation for modal if GSAP is available
+        if (typeof gsap !== 'undefined') {
+            gsap.fromTo(windowModal, 
+                { y: -30, opacity: 0}, 
+                { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }
+            );
+        } else {
+            windowModal.style.opacity = 1;
+        }
+        
+        // Reset selected reason
+        selectedReason = null;
+        resetCardSelection();
+    }
+    
+    // Hide modal function
+    function hideModal() {
+        if (typeof gsap !== 'undefined') {
+            gsap.to(windowModal, {
+                y: -30,
+                opacity: 0,
+                duration: 0.3,
+                ease: "power2.in",
+                onComplete: () => {
+                    windowModal.style.display = 'none';
+                    overlay.style.display = 'none';
+                }
+            });
+        } else {
+            windowModal.style.opacity = 0;
+            windowModal.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+    }
+    
+    // Reset card selection
+    function resetCardSelection() {
+        reasonCards.forEach(card => {
+            if (typeof gsap !== 'undefined') {
+                gsap.to(card, {
+                    backgroundColor: 'var(--border)',
+                    color: 'var(--text-secondary)',
+                    duration: 0.3,
+                    y: 0
+                });
+            } else {
+                card.style.backgroundColor = 'var(--border)';
+                card.style.color = 'var(--text-secondary)';
+                card.style.transform = 'translateY(0)';
+            }
+        });
+    }
+    
+    // Initialize GSAP hover animations for cards if GSAP is available
+    function initCardAnimations() {
+        if (typeof gsap === 'undefined') return;
+        
+        reasonCards.forEach(card => {
+            // Create hover animations
+            card.addEventListener('mouseenter', () => {
+                if (card.dataset.value !== selectedReason) {
+                    gsap.to(card, {
+                        y: -5,
+                        duration: 0.2,
+                        ease: "power1.out",
+                        boxShadow: "0 8px 15px var(--shadow)"
+                    });
+                }
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                if (card.dataset.value !== selectedReason) {
+                    gsap.to(card, {
+                        y: 0,
+                        duration: 0.2,
+                        ease: "power1.in",
+                        boxShadow: "2px 5px 10px var(--shadow)"
+                    });
+                }
+            });
+        });
+    }
 
     // Event Listeners for user ready buttons
     user1Button.addEventListener('click', function() {
@@ -305,9 +430,73 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // End button event listener
+    // End button event listener - MODIFIED TO ONLY SHOW MODAL
     endButton.addEventListener('click', function() {
+        // Instead of ending right away, show the modal for confirmation
+        showModal();
+    });
+    
+    // Close modal when X is clicked
+    closeButton.addEventListener('click', hideModal);
+    
+    // Close modal when cancel button is clicked
+    cancelButton.addEventListener('click', hideModal);
+    
+    // Handle end session confirmation - THIS IS WHAT ACTUALLY ENDS THE SESSION
+    confirmEndButton.addEventListener('click', function() {
         endTimer(currentUser);
+        hideModal();
+    });
+    
+    // Close modal if clicked outside
+    overlay.addEventListener('click', hideModal);
+    
+    // Selected reason
+    let selectedReason = null;
+    
+    // Reason card selection with enhanced animations
+    reasonCards.forEach(card => {
+        card.addEventListener('click', function() {
+            // Reset all cards first
+            resetCardSelection();
+            
+            // Store selected reason
+            selectedReason = this.dataset.value;
+            
+            if (typeof gsap !== 'undefined') {
+                // Highlight selected card with animation
+                gsap.to(this, {
+                    backgroundColor: 'var(--primary)', 
+                    color: 'white',
+                    y: -3, 
+                    scale: 1.03,
+                    duration: 0.3,
+                    ease: "back.out(1.2)",
+                    boxShadow: "0 8px 20px var(--shadow)"
+                });
+                othericon.style.color = 'var(--text-primary)';
+                if(this.id === 'card4' && othericon) {
+                    othericon.style.color = 'white';
+                }
+                
+                // Add a small pulse animation to indicate selection
+                gsap.fromTo(
+                    this,
+                    { boxShadow: "0 0 0 4px rgba(124, 58, 237, 0.5)" },
+                    { 
+                        boxShadow: "0 8px 20px var(--shadow)",
+                        duration: 0.6,
+                        ease: "power1.out"
+                    }
+                );
+            } else {
+                // Fallback for when GSAP is not available
+                this.style.backgroundColor = 'var(--primary-dark)';
+                this.style.color = 'white';
+                this.style.transform = 'translateY(-3px) scale(1.03)';
+                this.style.boxShadow = '0 8px 20px var(--shadow)';
+            }
+        });
     });
 
     // Initialize
@@ -323,8 +512,128 @@ document.addEventListener('DOMContentLoaded', function() {
     const startUserReadyObserver = new MutationObserver(updateStartButtonState);
     startUserReadyObserver.observe(user1ReadyIndicator, { attributes: true, childList: true });
     startUserReadyObserver.observe(user2ReadyIndicator, { attributes: true, childList: true });
+    
+    // Initialize card animations if GSAP is available
+    if (typeof gsap !== 'undefined') {
+        initCardAnimations();
+    }
 });
+// This JavaScript should be added to your timer.js file
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Find existing elements
+    const confirmEndButton = document.querySelector('.window .btn:nth-child(2)'); // The "End Session" button in modal
+    const feedbackContainer = document.querySelector('.feedback-container');
+    const sessionDurationText = document.querySelector('.session-details .session-item:first-child span:last-child');
+    const pointsEarnedText = document.querySelector('.session-details .session-item:last-child span:last-child');
+    
+    // Add these lines to your existing code to handle showing the feedback form
+    
+    // Create overlay for feedback container if it doesn't exist
+    let feedbackOverlay = document.querySelector('.feedback-overlay');
+    if (!feedbackOverlay) {
+        feedbackOverlay = document.createElement('div');
+        feedbackOverlay.className = 'overlay feedback-overlay';
+        document.body.appendChild(feedbackOverlay);
+    }
+    
+    // Hide feedback container initially
+    if (feedbackContainer) {
+        feedbackContainer.style.display = 'none';
+    }
+    
+    // Function to show feedback container
+    function showFeedbackContainer() {
+        if (feedbackContainer) {
+            // Update session details
+            // Get the current timer value and points
+            const timerText = document.querySelector('.timer-text').textContent;
+            const pointsText = document.querySelector('.points-text').textContent.split(' ')[0];
+            
+            // Update the feedback container with current values
+            sessionDurationText.textContent = timerText;
+            pointsEarnedText.textContent = pointsText;
+            
+            // Show the feedback container and overlay
+            feedbackContainer.style.display = 'block';
+            feedbackOverlay.style.display = 'block';
+            
+            // Add animation if GSAP is available
+            if (typeof gsap !== 'undefined') {
+                gsap.fromTo(feedbackContainer, 
+                    { y: -30, opacity: 0}, 
+                    { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }
+                );
+            }
+        }
+    }
+    
+    // Function to hide feedback container
+    function hideFeedbackContainer() {
+        if (feedbackContainer) {
+            if (typeof gsap !== 'undefined') {
+                gsap.to(feedbackContainer, {
+                    y: -30,
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        feedbackContainer.style.display = 'none';
+                        feedbackOverlay.style.display = 'none';
+                    }
+                });
+            } else {
+                feedbackContainer.style.display = 'none';
+                feedbackOverlay.style.display = 'none';
+            }
+        }
+    }
+    
+    // Modify the confirmEndButton click event to show feedback after ending the session
+    if (confirmEndButton) {
+        // Store the original click event handler
+        const originalClickHandler = confirmEndButton.onclick;
+        
+        // Replace with new handler that shows feedback
+        confirmEndButton.onclick = function(event) {
+            // Hide the end session modal first
+            const windowModal = document.querySelector('.window');
+            const overlay = document.querySelector('.overlay:not(.feedback-overlay)');
+            
+            if (windowModal) {
+                windowModal.style.display = 'none';
+            }
+            if (overlay) {
+                overlay.style.display = 'none';
+            }
+            
+            // Then show feedback
+            showFeedbackContainer();
+            
+            // End the timer in background
+            const currentUser = users ? users.user1 : null;
+            endTimer(currentUser);
+        };
+    }
+    
+    // Add click event to the "Submit Feedback" and "Close Session" buttons
+    const submitButton = document.getElementById('submit');
+    const closeButton = document.getElementById('close');
+    
+    if (submitButton) {
+        submitButton.addEventListener('click', function() {
+            // Here you would handle submitting the feedback to your backend
+            showToast('Feedback submitted successfully!', 'success');
+            hideFeedbackContainer();
+        });
+    }
+    
+    if (closeButton) {
+        closeButton.addEventListener('click', function() {
+            hideFeedbackContainer();
+        });
+    }
+});
 
 // Enhanced dark mode functionality - works with external toggle
 document.addEventListener("DOMContentLoaded", function () {
