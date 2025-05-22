@@ -518,7 +518,7 @@ document.addEventListener('DOMContentLoaded', function() {
         initCardAnimations();
     }
 });
-// This JavaScript should be added to your timer.js file
+
 
 document.addEventListener('DOMContentLoaded', function() {
     // Find existing elements
