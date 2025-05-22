@@ -277,8 +277,415 @@ body {
 }
 .space {
     padding: 0px;
-    position: absolute;
 }
+
+
+
+/* Files Modal Styling */
+.files-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--background);
+}
+
+.modal-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+#closeFilesModal {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 5px;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#closeFilesModal:hover {
+    background-color: var(--border);
+    color: var(--text-primary);
+    transform: scale(1.1);
+}
+
+#fileList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    flex: 1;
+    max-height: calc(80vh - 80px);
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.file-item:hover {
+    background-color: var(--background);
+}
+
+.file-item:last-child {
+    border-bottom: none;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0; /* Allows text to truncate */
+}
+
+.file-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: white;
+    flex-shrink: 0;
+}
+
+/* File type specific colors */
+.file-icon.pdf {
+    background-color: #ef4444;
+}
+
+.file-icon.doc {
+    background-color: #2563eb;
+}
+
+.file-icon.image {
+    background-color: #10b981;
+}
+
+.file-icon.text {
+    background-color: #6b7280;
+}
+
+.file-icon.video {
+    background-color: #8b5cf6;
+}
+
+.file-icon.audio {
+    background-color: #f59e0b;
+}
+
+.file-icon.archive {
+    background-color: #7c3aed;
+}
+
+.file-icon.default {
+    background-color: var(--text-secondary);
+}
+
+.file-details {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+}
+
+.file-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-meta {
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+    display: flex;
+    gap: 12px;
+}
+
+.file-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.file-action-btn {
+    padding: 6px 8px;
+    border: none;
+    background-color: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-action-btn:hover {
+    background-color: var(--border);
+    color: var(--text-primary);
+}
+
+.file-action-btn.download {
+    color: var(--primary-light);
+}
+
+.file-action-btn.download:hover {
+    background-color: rgba(139, 92, 246, 0.1);
+}
+
+.file-action-btn.delete {
+    color: #ef4444;
+}
+
+.file-action-btn.delete:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* Empty state */
+.empty-state {
+    padding: 40px 24px;
+    text-align: center;
+    color: var(--text-tertiary);
+}
+
+.empty-state .empty-icon {
+    font-size: 48px;
+    color: var(--border);
+    margin-bottom: 16px;
+}
+
+.empty-state .empty-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.empty-state .empty-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* File upload area (if you want to add drag & drop) */
+.upload-area {
+    padding: 20px 24px;
+    border-top: 1px solid var(--border);
+    background-color: var(--background);
+    text-align: center;
+}
+
+.upload-area.dragover {
+    background-color: rgba(139, 92, 246, 0.05);
+    border-color: var(--primary);
+}
+
+/* Modal overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Animation for modal */
+.files-modal {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+    transition: all 0.3s ease;
+}
+
+.files-modal.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .files-modal {
+        width: 95%;
+        max-width: 420px;
+        max-height: 85vh;
+    }
+    
+    .modal-header {
+        padding: 16px 20px;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.3rem;
+    }
+    
+    .file-item {
+        padding: 14px 20px;
+    }
+    
+    .file-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+    
+    .file-name {
+        font-size: 0.95rem;
+    }
+    
+    .file-meta {
+        font-size: 0.8rem;
+        gap: 8px;
+    }
+    
+    .file-actions {
+        gap: 4px;
+    }
+    
+    .file-action-btn {
+        padding: 5px 6px;
+        font-size: 12px;
+    }
+    
+    .empty-state {
+        padding: 30px 20px;
+    }
+    
+    .empty-state .empty-icon {
+        font-size: 40px;
+    }
+    
+    .empty-state .empty-title {
+        font-size: 1rem;
+    }
+    
+    .empty-state .empty-description {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .files-modal {
+        width: 98%;
+        max-height: 90vh;
+    }
+    
+    .modal-header {
+        padding: 14px 16px;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.2rem;
+    }
+    
+    .file-item {
+        padding: 12px 16px;
+    }
+    
+    .file-info {
+        gap: 10px;
+    }
+    
+    .file-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+    
+    .file-name {
+        font-size: 0.9rem;
+    }
+    
+    .file-meta {
+        font-size: 0.75rem;
+        flex-direction: column;
+        gap: 2px;
+    }
+    
+    .empty-state {
+        padding: 24px 16px;
+    }
+}
+
+
+.file-controls {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 0rem;
+}
+
+@media (max-width: 768px) {
+    .file-controls {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+    
+    .file-controls .button {
+        width: 100%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 /* Toast notifications */
 #toast-container {
     position: fixed;
