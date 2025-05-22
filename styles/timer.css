@@ -8,7 +8,6 @@
 body {
     background-color: var(--background);
     min-height: 100vh;
-    transform: translateY(-10px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -277,7 +276,8 @@ body {
     background-color: #dc2626;
 }
 .space {
-    padding: 10px;
+    padding: 0px;
+    position: absolute;
 }
 /* Toast notifications */
 #toast-container {
