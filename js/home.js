@@ -1,4 +1,4 @@
-// Update your document.addEventListener("DOMContentLoaded") function to include GSAP animations
+
 document.addEventListener("DOMContentLoaded", function () {
   // Get all dropdown containers
   const containers = document.querySelectorAll(".container");
@@ -339,27 +339,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const modal = document.getElementById("modal");
   const settingBtn = document.getElementById("settingbtn");
   const closeBtn = document.getElementById("closeSettingsBtn");
-  const cancelBtn = document.querySelector(".neutral-button");
   const themeDropdown = document.querySelector(".theme-setting");
-  const difficultyDropdown = document.querySelector(".difficulty-setting");
 
   // Open modal
   settingBtn.addEventListener("click", function () {
     modal.classList.add("active");
-    document.body.style.overflow = "hidden"; // Prevent scrolling
+    document.body.style.overflow = "hidden";
   });
 
   // Close modal function
   function closeModal() {
     modal.classList.remove("active");
-    document.body.style.overflow = "auto"; // Enable scrolling
+    document.body.style.overflow = "auto";
   }
 
   // Close modal with button
   closeBtn.addEventListener("click", closeModal);
-
-  // Close modal with Cancel button
-  cancelBtn.addEventListener("click", closeModal);
 
   // Close modal when clicking outside
   modal.addEventListener("click", function (e) {
@@ -374,49 +369,7 @@ document.addEventListener("DOMContentLoaded", function () {
     e.stopPropagation();
   });
 
-  // Toggle theme options
-  themeDropdown.addEventListener("click", function () {
-    themeDropdown.classList.toggle("show-radio-options");
-
-    // Close difficulty dropdown if open
-    if (difficultyDropdown.classList.contains("show-radio-options")) {
-      difficultyDropdown.classList.remove("show-radio-options");
-    }
-  });
-
-  // Toggle difficulty options
-  difficultyDropdown.addEventListener("click", function () {
-    difficultyDropdown.classList.toggle("show-radio-options");
-
-    // Close theme dropdown if open
-    if (themeDropdown.classList.contains("show-radio-options")) {
-      themeDropdown.classList.remove("show-radio-options");
-    }
-  });
-
-  // Update theme selection
-  const themeOptions = document.querySelectorAll('input[name="theme"]');
-  themeOptions.forEach((option) => {
-    option.addEventListener("change", function () {
-      document.getElementById("themeDropdown").innerHTML =
-        this.value.charAt(0).toUpperCase() +
-        this.value.slice(1) +
-        ' <i class="fa-solid fa-chevron-down"></i>';
-    });
-  });
-
-  // Update difficulty selection
-  const difficultyOptions = document.querySelectorAll(
-    'input[name="difficulty"]'
-  );
-  difficultyOptions.forEach((option) => {
-    option.addEventListener("change", function () {
-      document.getElementById("difficultyDropdown").innerHTML =
-        this.value.charAt(0).toUpperCase() +
-        this.value.slice(1) +
-        ' <i class="fa-solid fa-chevron-down"></i>';
-    });
-  });
+  
 });
 
 // Search functionality

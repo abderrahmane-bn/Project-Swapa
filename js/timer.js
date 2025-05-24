@@ -98,7 +98,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!isRunning) {
       isRunning = true;
       isPaused = false;
-      showToast("Timer started!", "success");
 
       // Update UI
       startButton.style.display = "none";
@@ -121,22 +120,6 @@ document.addEventListener("DOMContentLoaded", function () {
       isPaused = true;
       users.user1.isReady = false;
       users.user2.isReady = false;
-
-      // Show different toast messages based on who initiated the pause
-      if (initiatingUser) {
-        showToast(
-          `${initiatingUser.name} paused the timer. Both users need to resume.`,
-          "info"
-        );
-
-        // Notify other user
-        notifyOtherUser(
-          `${initiatingUser.name} has paused the session`,
-          "warning"
-        );
-      } else {
-        showToast("Timer paused! Both users need to resume.", "info");
-      }
 
       // Update UI
       pauseButton.style.display = "none";
@@ -165,7 +148,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function resumeTimer() {
     if (isRunning && isPaused && users.user1.isReady && users.user2.isReady) {
       isPaused = false;
-      showToast("Timer resumed!", "success");
 
       // Update UI
       resumeButton.style.display = "none";
@@ -189,24 +171,6 @@ document.addEventListener("DOMContentLoaded", function () {
       users.user1.isReady = false;
       users.user2.isReady = false;
       const points = Math.floor(seconds / 2);
-
-      if (initiatingUser) {
-        showToast(
-          `${initiatingUser.name} ended the session! Both users earned ${points} points.`,
-          "success"
-        );
-
-        // Notify other user
-        notifyOtherUser(
-          `${initiatingUser.name} has ended the session. You earned ${points} points.`,
-          "info"
-        );
-      } else {
-        showToast(
-          `Session ended! Both users earned ${points} points.`,
-          "success"
-        );
-      }
 
       // Reset UI to initial state
       startButton.style.display = "inline-flex";
@@ -247,29 +211,6 @@ document.addEventListener("DOMContentLoaded", function () {
     users[userId].indicator.classList.add("is-ready");
     users[userId].element.disabled = true;
 
-    // Show different toasts based on the current state
-    if (!isRunning) {
-      showToast(`${users[userId].name} is ready to start!`, "info");
-
-      // If this is the current user, notify the other user
-      if (users[userId] === currentUser) {
-        notifyOtherUser(
-          `${currentUser.name} is ready to start the session`,
-          "info"
-        );
-      }
-    } else if (isPaused) {
-      showToast(`${users[userId].name} is ready to resume!`, "info");
-
-      // If this is the current user, notify the other user
-      if (users[userId] === currentUser) {
-        notifyOtherUser(
-          `${currentUser.name} is ready to resume the session`,
-          "info"
-        );
-      }
-    }
-
     // Check if both users are ready
     if (users.user1.isReady && users.user2.isReady) {
       if (!isRunning) {
@@ -278,50 +219,6 @@ document.addEventListener("DOMContentLoaded", function () {
         resumeTimer();
       }
     }
-  }
-
-  // Toast notification system
-  function showToast(message, type = "info") {
-    const toast = document.createElement("div");
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-
-    const container = document.getElementById("toast-container");
-    container.appendChild(toast);
-
-    // Auto-remove toast after 3 seconds
-    setTimeout(() => {
-      toast.style.animation = "toast-slide-out 0.3s ease-out forwards";
-      setTimeout(() => {
-        container.removeChild(toast);
-      }, 300);
-    }, 3000);
-  }
-
-  // Simulate notifications to other user
-  // In a real app, this would send a message through your backend
-  function notifyOtherUser(message, type = "info") {
-    console.log(`[NOTIFICATION TO OTHER USER]: ${message}`);
-
-    // Create a special notification toast to simulate the notification
-    // that would be received by the other user
-    const toast = document.createElement("div");
-    toast.className = `toast ${type}`;
-    toast.innerHTML = `<strong>📨 Notification sent:</strong><br>${message}`;
-
-    const container = document.getElementById("toast-container");
-    container.appendChild(toast);
-
-    // Auto-remove toast after 4 seconds
-    setTimeout(() => {
-      toast.style.animation = "toast-slide-out 0.3s ease-out forwards";
-      setTimeout(() => {
-        container.removeChild(toast);
-      }, 300);
-    }, 4000);
-
-    // In a real system, this is where you would call an API to send
-    // the notification to the other user via WebSockets, push notifications, etc.
   }
 
   // MODAL FUNCTIONS
@@ -439,8 +336,6 @@ document.addEventListener("DOMContentLoaded", function () {
   startButton.addEventListener("click", function () {
     if (users.user1.isReady && users.user2.isReady && !isRunning) {
       startTimer();
-    } else {
-      showToast("Both users must be ready to start the timer!", "warning");
     }
   });
 
@@ -453,8 +348,6 @@ document.addEventListener("DOMContentLoaded", function () {
   resumeButton.addEventListener("click", function () {
     if (users.user1.isReady && users.user2.isReady && isPaused) {
       resumeTimer();
-    } else {
-      showToast("Both users must be ready to resume the timer!", "warning");
     }
   });
 
@@ -663,7 +556,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (submitButton) {
     submitButton.addEventListener("click", function () {
       // Here you would handle submitting the feedback to your backend
-      showToast("Feedback submitted successfully!", "success");
       hideFeedbackContainer();
     });
   }
@@ -830,7 +722,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <button class="file-action-btn delete" title="Remove" onclick="removeFile(${index})">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="3,6 5,6 21,6"/>
-                                <path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2V6"/>
+                                <path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2,2h4a2,2,0,0,1,2,2V6"/>
                             </svg>
                         </button>
                     </div>
@@ -853,8 +745,6 @@ document.addEventListener("DOMContentLoaded", function () {
       uploadedFiles.push(fileData);
     });
 
-    // Show success toast
-    showToast(`${files.length} file(s) uploaded successfully!`, "success");
     updateFileList();
   }
 
@@ -863,7 +753,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const fileName = uploadedFiles[index].name;
     uploadedFiles.splice(index, 1);
     updateFileList();
-    showToast(`${fileName} removed`, "info");
   };
 
   // Download file
@@ -877,30 +766,7 @@ document.addEventListener("DOMContentLoaded", function () {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    showToast(`Downloading ${fileData.name}`, "info");
   };
-
-  // Toast notification function (if not already defined)
-  function showToast(message, type = "info") {
-    const toastContainer = document.getElementById("toast-container");
-    if (!toastContainer) return;
-
-    const toast = document.createElement("div");
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-
-    toastContainer.appendChild(toast);
-
-    // Remove toast after 3 seconds
-    setTimeout(() => {
-      toast.style.animation = "toast-slide-out 0.3s ease-in forwards";
-      setTimeout(() => {
-        if (toast.parentNode) {
-          toast.parentNode.removeChild(toast);
-        }
-      }, 300);
-    }, 3000);
-  }
 
   // Event listeners
   filesButton.addEventListener("click", showFilesModal);

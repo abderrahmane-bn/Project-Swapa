@@ -676,76 +676,6 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-/* Toast notifications */
-#toast-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    flex-direction: column-reverse;
-    gap: 8px;
-    max-width: 350px;
-    z-index: 1000;
-}
-
-.toast {
-    background-color: white;
-    border-radius: 4px;
-    padding: 12px 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    animation: toast-slide-in 0.3s ease-out forwards;
-    position: relative;
-    border-left: 4px solid #3b82f6;
-    max-width: 90vw;
-    word-break: break-word;
-}
-
-.toast.success {
-    border-left-color: #10b981;
-}
-
-.toast.info {
-    border-left-color: #3b82f6;
-}
-
-.toast.warning {
-    border-left-color: #f59e0b;
-}
-
-.toast.error {
-    border-left-color: #ef4444;
-}
-
-@keyframes toast-slide-in {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes toast-slide-out {
-    from {
-        transform: translateX(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-}
-
 /* Responsive adjustments */
 @media (min-width: 768px) {
     .container {
@@ -923,12 +853,12 @@ body {
         min-height: 50px;
     }
     .space{
-        padding: 30px 0;
+        padding: 30px 0 50px;
     }
     
 }
 
-/* Very small screens */
+
 @media (max-width: 360px) {
     .card-header {
         padding: 50px 0.75rem 0.75rem;
@@ -957,13 +887,15 @@ body {
     }
 }
 
-/* Mobile adjustments for the end session modal */
+
 @media (max-width: 768px) {
     .window {
         width: 98%;
         max-width: 420px;
         padding: 8px;
         gap: 6px;
+        overflow-y: auto;
+        max-height: 80vh;
     }
     
     .window h2 {
@@ -1018,7 +950,7 @@ body {
     }
 }
 
-/* Mobile adjustments for the feedback modal */
+
 @media (max-width: 768px) {
     .feedback-container {
         width: 90%;
@@ -1081,13 +1013,16 @@ body {
     }
 }
 
-/* Very small mobile screens (under 360px) */
+
 @media (max-width: 360px) {
     .window {
         width: 98%;
         max-width: 380px;
         padding: 5px;
-        gap: 4px;
+        gap: 5px;
+    }
+    .x {
+        position: fixed;
     }
     
     .window h2 {
@@ -1137,7 +1072,7 @@ body {
 .window{
     display: none; /* Hidden by default */
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
     position: fixed; /* Fixed positioning */
     background-color: var(--card-bg);
     border-radius: 8px;
